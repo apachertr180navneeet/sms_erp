@@ -1,0 +1,161 @@
+Finalized 6+ Month Full-Feature School ERP Multi-Tenant SaaS Project Plan
+Aligned with confirmed preferences: Laravel 11.x · MySQL 8.0 · Blade + Livewire · stancl/tenancy v3 · 6+ month timeline
+
+🔍 Confirmed Prerequisites
+Windows environment with XAMPP (PHP 8.2+, MySQL 8.0, Composer, Node.js 18+)
+Project root: C:\xampp\htdocs\laravel_project\sms_erp (currently empty)
+Payment gateway: TBD (evaluate Stripe/Razorpay/PayPal in Month 2)
+🛠️ Finalized Tech Stack
+Component	Selection	Version
+Backend Framework	Laravel 11.x	Latest
+Database	MySQL 8.0	8.0+
+Multi-Tenancy	stancl/tenancy	v3.x (Laravel 11 compatible)
+Auth	Laravel Breeze	v2.x (Multi-guard)
+RBAC	spatie/laravel-permission	v6.x
+Frontend	Blade + Livewire	Livewire 3.x
+API (Mobile)	Laravel Sanctum	v4.x
+PDF Generation	barryvdh/laravel-dompdf	v2.x
+Testing	Pest PHP	Laravel 11 default
+Styling	Tailwind CSS	v3.x (Breeze included)
+📅 6+ Month Full-Feature Development Timeline
+Broken into monthly phases, weekly tasks, mapped to all 17 modules + SaaS features
+
+🗓️ Month 1: Foundation & Multi-Tenancy Setup (Weeks 1-4)
+Goal: Working multi-tenant Laravel 11 app with base auth
+
+Week 1: Project Initialization
+Init Git repo, configure .env (MySQL, mail, queue)
+Install Laravel 11.x: composer create-project laravel/laravel .
+Install + configure stancl/tenancy v3: central DB (super admin) + per-tenant DB strategy, domain resolution, tenant middleware
+Week 2: Auth & RBAC Setup
+Install Laravel Breeze (Blade + Livewire stack)
+Configure multi-auth guards: super_admin, school_admin, teacher, student, parent
+Install spatie/laravel-permission, set up base roles/permissions
+Week 3: Base Middleware & Tenant Scoping
+Build tenant subscription check middleware
+Configure tenant-aware migrations (central vs tenant DBs)
+Set up base Blade layouts for super admin and tenant panels
+Week 4: Testing & Validation
+Write feature tests for tenant creation, auth flows
+Verify tenant data isolation
+Run php artisan pint (linting) and php artisan test (Pest)
+🗓️ Month 2: SaaS Super Admin Panel (Weeks 5-8)
+Goal: Functional super admin panel to manage schools/tenants
+
+Week 5: Central DB Migrations & Models
+Create central tables: tenants, domains, subscription_packages, subscriptions, payments
+Build Tenant, SubscriptionPackage, Domain models (central)
+Week 6: Tenant & Subscription Management
+Super admin CRUD for tenants (schools): activate/deactivate, trial periods
+Subscription package management: Free/Basic/Premium, feature limits
+Domain mapping: Subdomains (e.g., school1.sms-erp.com) or custom domains
+Week 7: Payment Gateway Evaluation & Integration
+Evaluate Stripe/Razorpay/PayPal (align with target market)
+Integrate selected gateway for subscription billing
+Build payment webhooks, invoice generation
+Week 8: Super Admin Dashboard & Testing
+Global analytics: Active schools, revenue, user counts
+Global settings panel
+Feature tests for super admin flows
+🗓️ Month 3: School Core Modules (Tenant Side) (Weeks 9-12)
+Goal: Core school setup and Student Information System (Module 2, 3)
+
+Week 9: Tenant School Setup
+Tenant-scoped migrations for school profile, branding, academic years
+School branding: Logo, colors, custom domain configuration
+Academic year setup, class/section management
+Week 10: Student Information System (SIS)
+Student admission flow, profile management, document upload
+ID card generation (PDF via dompdf)
+Class allocation, promotion/transfer, alumni management
+Week 11: Academic & Attendance Basics (Modules 5, 6)
+Subject, curriculum, timetable management (conflict-free scheduling)
+Student/staff attendance (manual + biometric/RFID integration prep)
+Attendance reports
+Week 12: Tenant RBAC & Testing
+Per-school role assignment (school admin, teacher, student, parent)
+Feature tests for tenant SIS and academic flows
+🗓️ Month 4: Academic & Examination Modules (Weeks 13-16)
+Goal: Admission, lesson planning, exam system (Modules 4, 5, 7)
+
+Week 13: Admission Management
+Online admission inquiry, lead management
+Entrance test scheduling, document verification, approval workflow
+Week 14: Lesson Planning & Assignments
+Lesson plan creation, homework/assignment management
+Online classes/LMS integration prep (optional)
+Week 15: Examination & Results
+Exam setup, marks entry, grade system configuration
+PDF report card generation, result analytics
+Week 16: Testing & Validation
+Feature tests for admission, exam, and academic modules
+Verify tenant data isolation for all new modules
+🗓️ Month 5: Finance, HR & Payroll (Weeks 17-20)
+Goal: Fee, accounting, HR/payroll (Modules 8, 9, 10)
+
+Week 17: Fee Management
+Fee structure setup, online/offline fee collection
+Discounts, scholarships, late fees, receipt generation
+Week 18: Accounting & Finance
+Income/expense tracking, ledger/journal entries
+Vendor management, balance sheet, audit reports
+Week 19: HR & Payroll
+Staff management, attendance/leave tracking
+Salary structure, payroll processing, PF/ESI integration
+Week 20: Testing
+Feature tests for finance and HR modules
+Verify payment gateway integration for fee collection
+🗓️ Month 6: Additional Modules (Weeks 21-24)
+Goal: Transport, Library, Hostel, Inventory (Modules 12, 13, 14, 15)
+
+Week 21: Transport Management
+Route/stop management, vehicle tracking, transport fees
+Driver details, vehicle maintenance logs
+Week 22: Library Management
+Book inventory, issue/return, barcode system, fine calculation
+Week 23: Hostel & Inventory
+Hostel room allocation, mess management, complaints
+Inventory/asset management, stock tracking, purchase orders
+Week 24: Testing
+Feature tests for all additional modules
+🗓️ Month 7+: Advanced Features & Launch (Weeks 25+)
+Goal: Reports, mobile API, white label, optimization (Modules 11, 16, 17 + SaaS features)
+
+Weeks 25-26: Reports & Analytics
+Custom dashboards for all roles (super admin, school admin, teacher, student, parent)
+Student, fee, attendance, financial reports (PDF export)
+Weeks 27-28: Mobile App API
+RESTful API via Laravel Sanctum for multi-role mobile apps
+API documentation (Swagger/OpenAPI)
+Weeks 29-30: White Label & Scalability
+Per-school custom branding, custom domains
+Scalability testing: Add unlimited schools, centralized updates
+Weeks 31-32: Optimization & Deployment
+Performance tuning, queue setup for notifications/emails
+Linting (pint), static analysis (phpstan), full test suite
+Deploy to production
+📦 Full Module Checklist (All 17 Modules + SaaS Features)
+✅ 1. Super Admin (SaaS Owner Panel) ✅ 2. Tenant Admin (School Panel) ✅ 3. Student Information System (Core) ✅ 4. Admission Management ✅ 5. Academic Management ✅ 6. Attendance Management ✅ 7. Examination & Result ✅ 8. Fee Management ✅ 9. Accounting & Finance ✅ 10. HR & Payroll ✅ 11. Communication Module ✅ 12. Transport Management ✅ 13. Library Management ✅ 14. Hostel Management ✅ 15. Inventory / Asset Management ✅ 16. Reports & Analytics ✅ 17. Mobile App (Multi-Role API) ✅ SaaS Features: Multi-Tenancy, Subscription System, White Label, RBAC, Scalability
+
+📂 Suggested Directory Structure (Laravel 11)
+sms_erp/
+├── app/
+│   ├── Models/
+│   │   ├── Central/ (Super Admin models: Tenant, SubscriptionPackage)
+│   │   └── Tenant/ (School-scoped models: Student, Staff, Fee)
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Central/ (Super Admin controllers)
+│   │   │   └── Tenant/ (School-scoped controllers)
+│   ├── Livewire/ (Blade + Livewire components)
+│   ├── Middleware/ (Tenant, subscription checks)
+├── resources/
+│   ├── views/
+│   │   ├── central/ (Super Admin Blade templates)
+│   │   └── tenant/ (School panel Blade templates)
+├── routes/
+│   ├── central.php (Super Admin routes)
+│   └── tenant.php (School-scoped routes)
+├── migrations/
+│   ├── central/ (Central DB migrations)
+│   └── tenant/ (Tenant DB migrations)
