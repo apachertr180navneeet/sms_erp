@@ -34,13 +34,19 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('super-admin.tenants.*') ? 'active' : '' }}" 
                                href="{{ route('super-admin.tenants.index') }}">
-                                <i class="bi bi-building"></i> Tenants
+                                <i class="bi bi-building"></i> Schools
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('super-admin.subscription-packages.*') ? 'active' : '' }}" 
                                href="{{ route('super-admin.subscription-packages.index') }}">
                                 <i class="bi bi-box-seam"></i> Packages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('super-admin.profile.*') ? 'active' : '' }}" 
+                               href="{{ route('super-admin.profile.edit') }}">
+                                <i class="bi bi-person-circle"></i> Profile
                             </a>
                         </li>
                         <li class="nav-item mt-3">

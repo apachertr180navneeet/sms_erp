@@ -23,6 +23,10 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return [
             'id',
             'name',
+            'school_logo',
+            'school_address',
+            'school_phone',
+            'school_email',
             'subscription_active',
             'subscription_starts_at',
             'subscription_ends_at',
