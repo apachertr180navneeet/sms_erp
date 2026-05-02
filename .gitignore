@@ -1,0 +1,51 @@
+# Dependencies
+/node_modules/
+/vendor/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Build outputs
+/backend/public/build/
+/frontend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+docker/data/
+
+# SQLite
+*.sqlite
+*.sqlite3
+
+# Coverage
+coverage/
+.phpunit.result.cache
+
+# Compiled assets
+/backend/bootstrap/cache/*.php
+
+# Uploads
+/backend/storage/app/public/*
+!/backend/storage/app/public/.gitkeep
+
+# Compiled JS
+*.js.map
