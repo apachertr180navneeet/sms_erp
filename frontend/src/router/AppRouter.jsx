@@ -5,6 +5,10 @@ import AdminLayout from '../layouts/AdminLayout';
 import SchoolLayout from '../layouts/SchoolLayout';
 import PortalLayout from '../layouts/PortalLayout';
 import AdminDashboard from '../pages/admin/Dashboard';
+import Schools from '../pages/super-admin/Schools';
+import SchoolDetail from '../pages/super-admin/SchoolDetail';
+import EditSchool from '../pages/super-admin/EditSchool';
+import CreateSchool from '../pages/super-admin/CreateSchool';
 import SchoolDashboard from '../pages/school/Dashboard';
 import PortalDashboard from '../pages/portal/Dashboard';
 import WebsiteHome from '../pages/website/Home';
@@ -42,6 +46,10 @@ function AppRouter() {
             </ProtectedRoute>
           }>
             <Route index element={<AdminDashboard />} />
+            <Route path="schools" element={<Schools />} />
+            <Route path="schools/:id" element={<SchoolDetail />} />
+            <Route path="schools/:id/edit" element={<EditSchool />} />
+            <Route path="schools/create" element={<CreateSchool />} />
           </Route>
 
           <Route path="/school-admin/*" element={

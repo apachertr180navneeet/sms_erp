@@ -1,8 +1,20 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+const navItems = [
+  { to: '/school-admin', label: 'Dashboard', exact: true },
+  { to: '/school-admin/students', label: 'Students' },
+  { to: '/school-admin/fees', label: 'Fees' },
+  { to: '/school-admin/exams', label: 'Exams' },
+];
+
+function isActive(to, exact) {
+  const path = window.location.pathname;
+  return exact ? path === to : path.startsWith(to);
+}
+
 export default function SchoolLayout() {
-  const { user, logout, hasRole } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -16,16 +28,16 @@ export default function SchoolLayout() {
         <h2>School ERP</h2>
         <div className="nav-user">{user?.name}</div>
         <ul>
-          <li><Link to="/school-admin">Dashboard</Link></li>
-          {hasRole('school_admin') && (
-            <>
-              <li><Link to="/school-admin/settings">Settings</Link></li>
-              <li><Link to="/school-admin/staff">Staff</Link></li>
-            </>
-          )}
-          <li><Link to="/school-admin/students">Students</Link></li>
-          <li><Link to="/school-admin/fees">Fees</Link></li>
-          <li><Link to="/school-admin/exams">Exams</Link></li>
+          {navItems.map(item => (
+            <li key={item.to}>
+              <Link
+                to={item.to}
+                className={isActive(item.to, item.exact) ? 'active' : ''}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
         <button className="btn-logout" onClick={handleLogout}>Logout</button>
       </nav>
