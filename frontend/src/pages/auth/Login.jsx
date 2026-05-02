@@ -8,7 +8,7 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, hasRole } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const subdomain = getSubdomain();
   const isSubdomainLogin = schoolAdminOnly && subdomain;
@@ -19,15 +19,16 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
     setLoading(true);
 
     try {
-      await login(email, password);
+      const data = await login(email, password);
+      const userRoles = data.user?.roles?.map(r => r.name) || [];
 
-      if (redirectRole && !hasRole(redirectRole)) {
+      if (redirectRole && !userRoles.includes(redirectRole)) {
         setError(`Access denied. This login is for ${redirectRole} only.`);
         setLoading(false);
         return;
       }
 
-      if (schoolAdminOnly && !hasRole('school_admin')) {
+      if (schoolAdminOnly && !userRoles.includes('school_admin')) {
         setError('Access denied. This login is for school admins only.');
         setLoading(false);
         return;
