@@ -7,9 +7,9 @@ export default function WebsiteHome() {
         <nav>
           <h1>SaaS School ERP</h1>
           <ul>
-            <li><Link to="/admin">Admin Login</Link></li>
-            <li><Link to="/school">School Login</Link></li>
-            <li><Link to="/portal">Portal Login</Link></li>
+            <li><Link to="/super-admin/login">Admin Login</Link></li>
+            <li><Link to="/school-admin/login">School Login</Link></li>
+            <li><Link to="/register-school">Register School</Link></li>
           </ul>
         </nav>
       </header>
