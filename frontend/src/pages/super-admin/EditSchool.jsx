@@ -16,6 +16,7 @@ export default function EditSchool() {
     phone: '',
     address: '',
     subdomain: '',
+    url: '',
     plan_id: '',
     is_active: true,
   });
@@ -31,6 +32,7 @@ export default function EditSchool() {
         phone: s.phone || '',
         address: s.address || '',
         subdomain: s.subdomain || '',
+        url: s.url || '',
         plan_id: s.plan_id || '',
         is_active: s.is_active,
       });
@@ -90,22 +92,9 @@ export default function EditSchool() {
               <span className="input-suffix">.yourdomain.com</span>
             </div>
           </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label>Phone</label>
-            <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label>Subscription Plan</label>
-            <select name="plan_id" value={formData.plan_id} onChange={handleChange}>
-              <option value="">No Plan</option>
-              {plans.map(p => (
-                <option key={p.id} value={p.id}>{p.name} - ${p.price}/{p.billing_cycle}</option>
-              ))}
-            </select>
+          <div className="form-group full-width">
+            <label>School Website URL</label>
+            <input type="url" name="url" value={formData.url} onChange={handleChange} placeholder="https://schoolname.com" />
           </div>
           <div className="form-group full-width">
             <label>Address</label>

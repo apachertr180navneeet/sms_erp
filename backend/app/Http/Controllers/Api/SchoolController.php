@@ -47,6 +47,7 @@ class SchoolController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'subdomain' => ['nullable', 'string', 'max:63', 'regex:/^[a-z0-9][a-z0-9-]*$/', 'unique:schools,subdomain'],
+            'url' => 'nullable|url|max:255',
             'plan_id' => 'nullable|exists:plans,id',
             'create_admin' => 'boolean',
             'admin_name' => 'required_if:create_admin,true|string|max:255',
@@ -63,6 +64,7 @@ class SchoolController extends Controller
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'subdomain' => $request->subdomain,
+                'url' => $request->url,
                 'plan_id' => $request->plan_id,
                 'is_active' => true,
             ]);
@@ -103,11 +105,12 @@ class SchoolController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'subdomain' => ['nullable', 'string', 'max:63', 'regex:/^[a-z0-9][a-z0-9-]*$/', Rule::unique('schools')->ignore($school->id)],
+            'url' => 'nullable|url|max:255',
             'plan_id' => 'nullable|exists:plans,id',
             'is_active' => 'boolean',
         ]);
 
-        $school->update($request->only(['name', 'email', 'phone', 'address', 'subdomain', 'plan_id', 'is_active']));
+        $school->update($request->only(['name', 'email', 'phone', 'address', 'subdomain', 'url', 'plan_id', 'is_active']));
 
         if ($request->has('slug')) {
             $school->update(['slug' => Str::slug($request->name)]);

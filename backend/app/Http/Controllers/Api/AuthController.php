@@ -39,7 +39,18 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $query = User::where('email', $request->email);
+
+        // If subdomain is provided, scope to that school
+        if ($request->header('X-School-Subdomain')) {
+            $subdomain = $request->header('X-School-Subdomain');
+            $school = \App\Models\School::where('subdomain', $subdomain)->first();
+            if ($school) {
+                $query->where('school_id', $school->id);
+            }
+        }
+
+        $user = $query->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);

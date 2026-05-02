@@ -13,9 +13,11 @@ class Plan extends Model
         'name',
         'description',
         'price',
+        'student_limit',
+        'staff_limit',
+        'storage_limit_mb',
         'billing_cycle',
         'features',
-        'modules',
         'is_active',
     ];
 
@@ -24,7 +26,6 @@ class Plan extends Model
         return [
             'price' => 'decimal:2',
             'features' => 'array',
-            'modules' => 'array',
             'is_active' => 'boolean',
         ];
     }
@@ -32,5 +33,15 @@ class Plan extends Model
     public function schools()
     {
         return $this->hasMany(School::class);
+    }
+
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class, 'plan_module');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
 }

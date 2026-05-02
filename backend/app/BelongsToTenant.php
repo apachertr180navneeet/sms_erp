@@ -10,17 +10,37 @@ trait BelongsToTenant
     public static function bootBelongsToTenant(): void
     {
         static::creating(function ($model) {
-            if (auth()->check()) {
-                $user = auth()->user();
-                if ($user->school_id && !$model->school_id) {
-                    $model->school_id = $user->school_id;
+            if (!$model->school_id) {
+                // Priority 1: Subdomain middleware context
+                if (config('app.tenant.school')) {
+                    $model->school_id = config('app.tenant.school')->id;
+                }
+                // Priority 2: Authenticated user's school
+                elseif (auth()->check() && auth()->user()->school_id) {
+                    $model->school_id = auth()->user()->school_id;
                 }
             }
         });
 
         static::addGlobalScope('tenant', function (Builder $builder) {
-            if (auth()->check() && auth()->user()->school_id) {
-                $builder->where('school_id', auth()->user()->school_id);
+            // Skip scoping for super_admin users
+            if (auth()->check() && auth()->user()->hasRole('super_admin')) {
+                return;
+            }
+
+            $schoolId = null;
+
+            // Check subdomain middleware context first
+            if (config('app.tenant.school')) {
+                $schoolId = config('app.tenant.school')->id;
+            }
+            // Fall back to authenticated user's school
+            elseif (auth()->check() && auth()->user()->school_id) {
+                $schoolId = auth()->user()->school_id;
+            }
+
+            if ($schoolId) {
+                $builder->where('school_id', $schoolId);
             }
         });
     }

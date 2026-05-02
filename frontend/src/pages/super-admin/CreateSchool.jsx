@@ -13,6 +13,7 @@ export default function CreateSchool() {
     phone: '',
     address: '',
     subdomain: '',
+    url: '',
     plan_id: '',
     create_admin: true,
     admin_name: '',
@@ -94,6 +95,10 @@ export default function CreateSchool() {
             <div className="form-group full-width">
               <label>Address</label>
               <textarea name="address" value={formData.address} onChange={handleChange} rows="2" />
+            </div>
+            <div className="form-group full-width">
+              <label>School Website URL</label>
+              <input type="url" name="url" value={formData.url} onChange={handleChange} placeholder="https://schoolname.com" />
             </div>
             <div className="form-group">
               <label>Subscription Plan</label>

@@ -4,8 +4,9 @@ import { useAuth } from '../context/AuthContext';
 const navItems = [
   { to: '/super-admin', label: 'Dashboard', exact: true },
   { to: '/super-admin/schools', label: 'Schools' },
-  { to: '/super-admin/users', label: 'Users' },
+  { to: '/super-admin/modules', label: 'Modules' },
   { to: '/super-admin/plans', label: 'Plans' },
+  { to: '/super-admin/users', label: 'Users' },
 ];
 
 function isActive(to, exact) {

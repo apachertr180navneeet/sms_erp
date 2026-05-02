@@ -16,7 +16,7 @@ export default function Schools() {
   const fetchSchools = async () => {
     try {
       const res = await api.get('/admin/schools');
-      setSchools(res.data.schools?.data || []);
+      setSchools(res.data.schools?.data || res.data.schools || []);
     } catch (err) {
       console.error('Failed to fetch schools', err);
     } finally {
@@ -102,6 +102,7 @@ export default function Schools() {
                 <th>Name</th>
                 <th>Code</th>
                 <th>Subdomain</th>
+                <th>Website URL</th>
                 <th>Email</th>
                 <th>Plan</th>
                 <th>Status</th>
@@ -114,6 +115,15 @@ export default function Schools() {
                   <td><strong>{school.name}</strong></td>
                   <td><code>{school.code}</code></td>
                   <td>{school.subdomain || '—'}</td>
+                  <td>
+                    {school.url ? (
+                      <a href={school.url} target="_blank" rel="noopener noreferrer" className="link-external">{school.url}</a>
+                    ) : school.subdomain ? (
+                      <span className="link-external" title="Subdomain URL">https://{school.subdomain}.localhost</span>
+                    ) : (
+                      '—'
+                    )}
+                  </td>
                   <td>{school.email || '—'}</td>
                   <td>{school.plan?.name || '—'}</td>
                   <td>
@@ -122,6 +132,7 @@ export default function Schools() {
                     </span>
                   </td>
                   <td className="actions-cell">
+                    <Link to={`/super-admin/schools/${school.id}/subscription`} className="btn-sm btn-subscribe">Subscription</Link>
                     <Link to={`/super-admin/schools/${school.id}/edit`} className="btn-sm btn-edit">Edit</Link>
                     <button className="btn-sm" onClick={() => toggleStatus(school)}>
                       {school.is_active ? 'Disable' : 'Enable'}

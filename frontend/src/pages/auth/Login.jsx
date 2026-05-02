@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { getSubdomain } from '../../config/subdomain';
 
 export default function Login({ redirectRole, schoolAdminOnly = false }) {
   const [email, setEmail] = useState('');
@@ -9,6 +10,8 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
   const [loading, setLoading] = useState(false);
   const { login, hasRole } = useAuth();
   const navigate = useNavigate();
+  const subdomain = getSubdomain();
+  const isSubdomainLogin = schoolAdminOnly && subdomain;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,13 +41,14 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
     }
   };
 
-  const title = schoolAdminOnly ? 'School Admin Login' : 'Super Admin Login';
+  const title = isSubdomainLogin ? 'School Portal Login' : schoolAdminOnly ? 'School Admin Login' : 'Super Admin Login';
   const mainLink = schoolAdminOnly ? '/super-admin/login' : '/school-admin/login';
   const mainLinkText = schoolAdminOnly ? 'Super Admin' : 'School Admin';
 
   return (
     <div className="auth-page">
       <div className="auth-container">
+        {isSubdomainLogin && <div className="school-badge">{subdomain}</div>}
         <h2>{title}</h2>
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
@@ -60,12 +64,16 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p className="auth-link">
-          Looking for {mainLinkText} login? <Link to={mainLink}>{mainLinkText} Login</Link>
-        </p>
-        <p className="auth-link">
-          Want to register a school? <Link to="/register-school">Register School</Link>
-        </p>
+        {!isSubdomainLogin && (
+          <>
+            <p className="auth-link">
+              Looking for {mainLinkText} login? <Link to={mainLink}>{mainLinkText} Login</Link>
+            </p>
+            <p className="auth-link">
+              Want to register a school? <Link to="/register-school">Register School</Link>
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

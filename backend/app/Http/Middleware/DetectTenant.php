@@ -11,8 +11,7 @@ class DetectTenant
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $host = $request->getHost();
-        $subdomain = $this->extractSubdomain($host);
+        $subdomain = $this->resolveSubdomain($request);
 
         if ($subdomain) {
             $school = School::where('subdomain', $subdomain)->first();
@@ -32,14 +31,23 @@ class DetectTenant
         return $next($request);
     }
 
-    protected function extractSubdomain(string $host): ?string
+    protected function resolveSubdomain(Request $request): ?string
     {
-        $parts = explode('.', $host);
-
-        if (count($parts) < 3) {
-            return null;
+        // Priority 1: X-School-Subdomain header (for frontend subdomain detection)
+        $headerSubdomain = $request->header('X-School-Subdomain');
+        if ($headerSubdomain) {
+            return $headerSubdomain;
         }
 
-        return $parts[0];
+        // Priority 2: Extract from Host header (for direct subdomain access)
+        $host = $request->getHost();
+        $parts = explode('.', $host);
+
+        // subdomain.domain.tld => 3+ parts
+        if (count($parts) >= 3) {
+            return $parts[0];
+        }
+
+        return null;
     }
 }

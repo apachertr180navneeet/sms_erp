@@ -96,6 +96,26 @@ export default function SchoolDetail() {
             <span className="detail-value">{school.address || '—'}</span>
           </div>
           <div className="detail-row">
+            <span className="detail-label">Website URL</span>
+            <span className="detail-value">
+              {school.url ? (
+                <a href={school.url} target="_blank" rel="noopener noreferrer">{school.url}</a>
+              ) : (
+                school.website_url || '—'
+              )}
+            </span>
+          </div>
+          <div className="detail-row">
+            <span className="detail-label">Subdomain URL</span>
+            <span className="detail-value">
+              {school.subdomain ? (
+                <a href={`https://${school.subdomain}.localhost`} target="_blank" rel="noopener noreferrer">
+                  https://{school.subdomain}.localhost
+                </a>
+              ) : '—'}
+            </span>
+          </div>
+          <div className="detail-row">
             <span className="detail-label">Plan</span>
             <span className="detail-value">{school.plan?.name || '—'}</span>
           </div>
