@@ -137,4 +137,21 @@ class SchoolController extends Controller
             'inactive' => School::where('is_active', false)->count(),
         ]);
     }
+
+    public function bySubdomain(Request $request)
+    {
+        $request->validate([
+            'subdomain' => 'required|string',
+        ]);
+
+        $school = School::where('subdomain', $request->subdomain)->where('is_active', true)->first();
+
+        if (!$school) {
+            return response()->json(['message' => 'School not found'], 404);
+        }
+
+        return response()->json([
+            'school' => $school,
+        ]);
+    }
 }

@@ -20,6 +20,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::post('/schools/register', [SchoolRegistrationController::class, 'register']);
+Route::get('/schools/by-subdomain', [SchoolController::class, 'bySubdomain']);
 Route::apiResource('plans', PlanController::class)->only(['index', 'show']);
 
 Route::middleware(['auth:sanctum', 'role:super_admin'])->prefix('admin')->group(function () {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext';
 import { getSubdomain } from '../../config/subdomain';
 
 export default function Login({ redirectRole, schoolAdminOnly = false }) {
@@ -9,6 +10,7 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const { addToast } = useToast();
   const navigate = useNavigate();
   const subdomain = getSubdomain();
   const isSubdomainLogin = schoolAdminOnly && subdomain;
@@ -34,9 +36,14 @@ export default function Login({ redirectRole, schoolAdminOnly = false }) {
         return;
       }
 
-      navigate(redirectRole === 'super_admin' ? '/super-admin' : '/school-admin');
+      addToast('Login successful! Redirecting...', 'success');
+
+      if (redirectRole === 'super_admin') navigate('/super-admin');
+      else if (subdomain) navigate('/dashboard');
+      else navigate('/school-admin');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const msg = err.response?.data?.message || err.response?.data?.error || 'Login failed. Please check your credentials.';
+      setError(msg);
     } finally {
       setLoading(false);
     }

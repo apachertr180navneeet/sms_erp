@@ -1,5 +1,10 @@
 export function getSubdomain() {
-  const hostname = window.location.hostname;
+  let hostname = window.location.hostname;
+
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return null;
+  }
+
   const parts = hostname.split('.');
 
   if (parts.length >= 3) {
